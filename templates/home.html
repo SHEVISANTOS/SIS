@@ -1,0 +1,53 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1>Welcome to Student Information System</h1>
+    
+    {% if user.is_authenticated %}
+        <p>You are logged in as <strong>{{ user.get_full_name|default:user.username|title }}</strong> ({{ user.role }}).</p>
+
+        <!-- Student Dashboard -->
+        {% if user.role == 'student' %}
+            <div class="mt-4">
+                <a href="{% url 'student_dashboard' %}" class="btn btn-success btn-lg">
+                    🎓 Go to My Academic Dashboard
+                </a>
+            </div>
+
+        <!-- Admin Panel -->
+        {% elif user.role == 'admin' %}
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <div class="card text-start">
+                        <div class="card-header bg-primary text-white">
+                            <h4>Administrator Panel</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="/students/add/">➕ Add New Student</a></li>
+                                <li class="list-group-item"><a href="/admin/">⚙️ Django Admin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Faculty Dashboard -->
+        {% elif user.role == 'faculty' %}
+            <div class="mt-4">
+                <a href="{% url 'faculty_dashboard' %}" class="btn btn-info btn-lg">
+                    👨‍🏫 Go to My Faculty Dashboard
+                </a>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- ONLY show this if NOT logged in -->
+        <p>Please log in to access the system.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    {% endif %}
+</div>
+{% endblock %}

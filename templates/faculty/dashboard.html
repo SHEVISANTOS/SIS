@@ -1,0 +1,23 @@
+<!-- templates/faculty/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>👨‍🏫 Faculty Dashboard</h2>
+    <p>Welcome, {{ faculty.user.get_full_name }}!</p>
+
+    <h4>Your Courses</h4>
+    {% if courses %}
+        <div class="list-group">
+        {% for course in courses %}
+            <a href="{% url 'enter_grades' course.id %}" class="list-group-item list-group-item-action">
+                {{ course.code }} - {{ course.name }}
+                <span class="badge bg-primary">Enter Grades</span>
+            </a>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">You are not assigned to any courses yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
