@@ -31,7 +31,7 @@ class Enrollment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
     enrolled_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')  # ← MUST BE HERE
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
 
     class Meta:
         unique_together = ('student', 'course')

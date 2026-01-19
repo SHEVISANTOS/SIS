@@ -36,7 +36,7 @@ class StudentDashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         student = get_object_or_404(Student, user=self.request.user)
-        enrollments = Enrollment.objects.filter(student=student, status='active')
+        enrollments = Enrollment.objects.filter(student=student)
         
         # Add grades
         enriched_enrollments = []
